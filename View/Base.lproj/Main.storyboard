@@ -149,6 +149,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="CollectionView" destination="Bnq-9N-Pfc" id="Cgc-xe-jyI"/>
                         <outlet property="stockSearch" destination="KtG-Rc-S3S" id="oct-3K-cbO"/>
                         <outlet property="stockSegmented" destination="gb0-kn-maa" id="Cyf-d6-J7z"/>
                     </connections>

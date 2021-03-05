@@ -11,15 +11,13 @@ class YandexStocks: UIViewController {
     
     let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     
+    @IBOutlet weak var CollectionView: UICollectionView!
     @IBOutlet weak var stockSearch: UISearchBar!
     @IBOutlet weak var stockSegmented: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
-        
-    
-        
     }
     
     @IBAction func stockSegmentedChanged(_ sender: UISegmentedControl) {
@@ -60,3 +58,4 @@ extension YandexStocks: UICollectionViewDataSource {
     }
     
 }
+
