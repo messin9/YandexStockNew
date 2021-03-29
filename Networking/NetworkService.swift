@@ -10,7 +10,7 @@ import Foundation
 class NetworkManager {
     static let shared = NetworkManager()
     
-    private let jsonUrlString = "https://cloud.iexapis.com/stable/stock/market/list/mostactive?token=pk_8d561d50f34c4fb78ebba6d7cbbb4235&listLimit=100"
+    private let jsonUrlString = "https://cloud.iexapis.com/stable/stock/market/list/mostactive?token=pk_31814b353e184d8493520b87df2070c7"
     
     private init() {}
     
@@ -36,6 +36,4 @@ class NetworkManager {
         }.resume()
     }
 }
-
-
 

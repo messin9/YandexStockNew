@@ -8,6 +8,8 @@ import UIKit
 
 class StockCustomCollectionViewCell: UICollectionViewCell {
     
+    var delegate: YandexStocksViewController!
+    
 //MARK: IBOutlets/IBActions
     @IBOutlet weak var stockImageLabel: UIImageView!
     @IBOutlet weak var stockTickerLabel: UILabel!
@@ -18,27 +20,24 @@ class StockCustomCollectionViewCell: UICollectionViewCell {
     
     @IBAction func favoriteButtonPressed(_ sender: UIButton) {
         
-        if sender.image(for: .normal) == UIImage.init(systemName: "star") {
-            sender.setImage(UIImage.init(systemName: "star.fill"), for: .normal)
-        }
-        else {
-            sender.setImage(UIImage.init(systemName: "star"), for: .normal)
-        }
+        delegate.favButtonAction(button: stockFavouriteButtonLabel, ticker: stockTickerLabel.text ?? "error", cell: self)
+        
+    
     }
     
 //MARK: CellConfiguration
-    func configureLAbels (with stock: StockModel) {
+    func configureLAbels (with stock: StockAppear) {
         stockTickerLabel.text = stock.symbol
         stockNameLabel.text = stock.companyName
-        stockPriceLabel.text = "$" + String(stock.latestPrice ?? 0.0)
-        stockValueLabel.text = String(stock.change ?? 0.0) + "%"
-        
+        stockPriceLabel.text = "$" + String(stock.latestPrice )
+        stockValueLabel.text = String(stock.change ) + "%"
+//        stockFavouriteButtonLabel.tintColor = .systemYellow        
         if stock.change == 0 {stockValueLabel.textColor = .black}
-        else if stock.change ?? 0 > 0 {stockValueLabel.textColor = .green}
+        else if stock.change > 0 {stockValueLabel.textColor = .green}
         else {stockValueLabel.textColor = .red}
     }
     
-    func cacheImage (with stock: StockModel, placeholder: UIImage? = nil, cache: URLCache = URLCache.shared ) {
+    func cacheImage (with stock: StockAppear, placeholder: UIImage? = nil, cache: URLCache = URLCache.shared ) {
         let imageUrl = "https://storage.googleapis.com/iex/api/logos/\(stock.symbol).png"
         guard let url = URL(string: imageUrl) else { return }
         let request = URLRequest(url: url)
@@ -62,5 +61,6 @@ class StockCustomCollectionViewCell: UICollectionViewCell {
             }
         }.resume()
     }
+    
 }
 

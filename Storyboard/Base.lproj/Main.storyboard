@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DmP-wg-qPR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DmP-wg-qPR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -24,11 +25,11 @@
                                     <size key="itemSize" width="414" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="stockCell" id="cUm-GC-4Sb" customClass="StockCustomCollectionViewCell" customModule="yandexStock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="1" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7H1-iQ-e0I">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -49,7 +50,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yandex, LLC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUn-N0-1Ip">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yandex, LLC" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUn-N0-1Ip">
                                                             <rect key="frame" x="0.0" y="25" width="70" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="15" id="wpi-rG-fTk"/>
@@ -83,9 +84,11 @@
                                                         <constraint firstItem="e2V-bI-vtC" firstAttribute="centerX" secondItem="8xf-Cl-FWx" secondAttribute="centerX" id="ov1-vm-PbD"/>
                                                     </constraints>
                                                 </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tdu-YT-wAV">
-                                                    <rect key="frame" x="136" y="15" width="22" height="22"/>
-                                                    <state key="normal" image="star" catalog="system"/>
+                                                <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="favButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tdu-YT-wAV">
+                                                    <rect key="frame" x="136" y="10" width="22" height="22"/>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="star.fill" catalog="system" symbolScale="default"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="favoriteButtonPressed:" destination="cUm-GC-4Sb" eventType="touchUpInside" id="fI9-e7-cJO"/>
                                                     </connections>
@@ -101,7 +104,7 @@
                                                 <constraint firstItem="zS8-vd-YDB" firstAttribute="top" secondItem="7H1-iQ-e0I" secondAttribute="top" constant="20" id="cHb-lT-UIV"/>
                                                 <constraint firstItem="Tdu-YT-wAV" firstAttribute="leading" secondItem="K5B-TZ-svc" secondAttribute="trailing" constant="10" id="cwe-JC-Na0"/>
                                                 <constraint firstItem="Veg-Zr-olL" firstAttribute="leading" secondItem="7H1-iQ-e0I" secondAttribute="leading" constant="10" id="eqV-t2-bei"/>
-                                                <constraint firstItem="Tdu-YT-wAV" firstAttribute="top" secondItem="7H1-iQ-e0I" secondAttribute="top" constant="15" id="u9G-qW-QF3"/>
+                                                <constraint firstItem="Tdu-YT-wAV" firstAttribute="top" secondItem="7H1-iQ-e0I" secondAttribute="top" constant="10" id="u9G-qW-QF3"/>
                                                 <constraint firstAttribute="bottom" secondItem="zS8-vd-YDB" secondAttribute="bottom" constant="20" id="vJQ-pv-dYd"/>
                                             </constraints>
                                         </collectionViewCellContentView>
@@ -176,7 +179,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
