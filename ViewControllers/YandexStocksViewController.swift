@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class YandexStocksViewController: UIViewController {
     
     var cellDelegate: StockCustomCollectionViewCell?
     
-//MARK: IBOutlets/Actions
+    //MARK: IBOutlets/Actions
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stockSegmented: UISegmentedControl!
     @IBOutlet var navigationItemOutlet: UINavigationItem!
@@ -21,18 +22,17 @@ class YandexStocksViewController: UIViewController {
             currentDataSource = favoriteStocks
             collectionView.reloadData()
         } else {
-//            currentDataSource = stocks
             restoreCurrentDataSource()
-            collectionView.reloadData()
         }
     }
     
-//MARK: Arrays
-     var stocks: [StockAppear] = []
-     var currentDataSource: [StockAppear]!
-     var favoriteStocks: [StockAppear] = []
+    //MARK: Arrays
+    var stocks: [StockAppear] = []
+    var currentDataSource: [StockAppear]!
+    var favoriteStocks: [StockAppear] = []
+    var filteredStocks: [StockAppear] = []
     
-//MARK: Configuring Search
+    //MARK: Configuring Search
     let searchController = UISearchController(searchResultsController: nil)
     var searchBar: UISearchBar {
         return searchController.searchBar
@@ -45,8 +45,7 @@ class YandexStocksViewController: UIViewController {
     }
     func filterCurrentDataSource(SearchTerm: String) {
         if SearchTerm.count > 0 {
-            currentDataSource = stocks
-            let filteredStocks = stocks.filter { $0.companyName.lowercased().contains(SearchTerm.lowercased())
+            filteredStocks = stocks.filter { $0.companyName.lowercased().contains(SearchTerm.lowercased())
                 || $0.symbol.lowercased().contains(SearchTerm.lowercased())
             }
             currentDataSource = filteredStocks
@@ -59,10 +58,10 @@ class YandexStocksViewController: UIViewController {
         collectionView.reloadData()
     }
     
-//MARK: CollectionViewLayout
+    //MARK: CollectionViewLayout
     private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     
-//MARK: viewDidLoad
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         NetworkManager.shared.fetchData { [weak self] stocks in
@@ -78,35 +77,21 @@ class YandexStocksViewController: UIViewController {
         configureSearchController()
     }
     
-//    func favoriteButtonAction (ticker: String, cell: UICollectionViewCell) {
-//
-//        let indexPathTapped = collectionView.indexPath(for: cell)
-//        print(indexPathTapped)
-//
-//        if let index = favoriteStocks.firstIndex(where: {$0.symbol == ticker }) {
-//            favoriteStocks.remove(at: index)
-//        } else {
-//            favoriteStocks.append(stocks[stocks.firstIndex(where: {$0.symbol == ticker}) ?? 0])
-//        }
-//    }
-    
-    func favButtonAction(button: UIButton, ticker: String, cell: UICollectionViewCell) {
+//    MARK: FavoriteButtonAction
+    func favButtonAction (button: UIButton, cell: UICollectionViewCell) {
         guard let indexPathTapped = collectionView.indexPath(for: cell) else { return }
-        let stock = currentDataSource[indexPathTapped.item]
-        let tickerFavStatus = stock.isFavorite
-        currentDataSource[indexPathTapped.item].isFavorite = !tickerFavStatus
+        if favoriteStocks.contains(where: {$0.isFavorite == true}) {
+            currentDataSource[indexPathTapped.item].isFavorite.toggle()
+            favoriteStocks = currentDataSource.filter({$0.isFavorite == true})
+        } else {
+            currentDataSource[indexPathTapped.item].isFavorite.toggle()
+            favoriteStocks.append(contentsOf: currentDataSource.filter({$0.isFavorite == true}))
+        }
         stocks[indexPathTapped.item].isFavorite = currentDataSource[indexPathTapped.item].isFavorite
         collectionView.reloadItems(at: [indexPathTapped])
-        if  let index = favoriteStocks.firstIndex(where: {$0.symbol == ticker }) {
-            favoriteStocks.remove(at: index)
-            collectionView.reloadItems(at: [indexPathTapped])
-        } else {
-            favoriteStocks.append(currentDataSource[currentDataSource.firstIndex(where: {$0.symbol == ticker}) ?? 0])
-        }
+        
     }
-
 }
-
 //MARK: UICollectionViewDelegateFlowLayout
 extension YandexStocksViewController: UICollectionViewDelegateFlowLayout {
     
@@ -130,8 +115,10 @@ extension YandexStocksViewController: UICollectionViewDataSource {
         
         cell.delegate = self
         
-        let currentStock = currentDataSource[indexPath.item]
+        let stock = stocks[indexPath.item]
+        cell.stockFavouriteButtonLabel.tintColor = stock.isFavorite ? .systemBlue : .lightGray
         
+        let currentStock = currentDataSource[indexPath.item]
         cell.stockFavouriteButtonLabel.tintColor = currentStock.isFavorite ? .systemBlue : .lightGray
         
         cell.layer.cornerRadius = collectionView.frame.width / 20
@@ -141,10 +128,10 @@ extension YandexStocksViewController: UICollectionViewDataSource {
         cell.cacheImage(with: currentDataSource[indexPath.item])
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let currentDataSource = self.currentDataSource else { return 0 }
-    
+        
         return currentDataSource.count
     }
 }
@@ -173,8 +160,10 @@ extension YandexStocksViewController: UISearchBarDelegate {
         if let searchText = searchBar.text, searchText.isEmpty {
             restoreCurrentDataSource()
         }
-
+        
     }
-
+    
 }
+
+
 

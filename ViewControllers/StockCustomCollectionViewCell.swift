@@ -19,10 +19,7 @@ class StockCustomCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stockFavouriteButtonLabel: UIButton!
     
     @IBAction func favoriteButtonPressed(_ sender: UIButton) {
-        
-        delegate.favButtonAction(button: stockFavouriteButtonLabel, ticker: stockTickerLabel.text ?? "error", cell: self)
-        
-    
+        delegate.favButtonAction(button: stockFavouriteButtonLabel, cell: self)
     }
     
 //MARK: CellConfiguration
@@ -30,8 +27,7 @@ class StockCustomCollectionViewCell: UICollectionViewCell {
         stockTickerLabel.text = stock.symbol
         stockNameLabel.text = stock.companyName
         stockPriceLabel.text = "$" + String(stock.latestPrice )
-        stockValueLabel.text = String(stock.change ) + "%"
-//        stockFavouriteButtonLabel.tintColor = .systemYellow        
+        stockValueLabel.text = String(stock.change ) + "%"      
         if stock.change == 0 {stockValueLabel.textColor = .black}
         else if stock.change > 0 {stockValueLabel.textColor = .green}
         else {stockValueLabel.textColor = .red}
