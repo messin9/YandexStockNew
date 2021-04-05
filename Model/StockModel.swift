@@ -13,15 +13,6 @@ struct StockModel: Decodable {
     let latestPrice: Double?
     let change : Double?
     let imageUrl: String?
-    
-//    init(symbol: String, companyName: String, latestPrice: Double, change: Double, imageUrl: String, isFavorite: Bool = false) {
-//        self.isFavorite = false
-//        self.symbol =
-//        self.companyName = companyName
-//        self.imageUrl = imageUrl
-//        self.latestPrice = latestPrice
-//        self.change = change
-//    }
 }
 
 struct StockAppear {
